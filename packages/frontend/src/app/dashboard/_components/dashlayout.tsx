@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Navbar from "./navbar";
+import EcoCharacter from "@/components/eco-character";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { Home, Wallet, Shirt, Heart, Settings } from "lucide-react";
@@ -235,6 +236,7 @@ export default function DashboardLayout({
       </style>
       <div className={`min-h-screen ${styles.backgroundGradient}`}>
         <BackgroundElements />
+        <EcoCharacter />
 
         <div className="relative z-10">
           {/* Top Navigation */}

@@ -386,6 +386,7 @@ const DonationCentersPage: React.FC = () => {
     return (
       <div className="min-h-screen relative">
         <BackgroundElements />
+
         <Navbar />
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-12">
           <h1 className="text-3xl font-bold text-white mb-8">Donation Centers</h1>
@@ -398,6 +399,7 @@ const DonationCentersPage: React.FC = () => {
   return (
     <div className="min-h-screen relative">
       <BackgroundElements />
+
       <Navbar />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-12">

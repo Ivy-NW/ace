@@ -21,6 +21,7 @@ import {
   SearchParams,
 } from "@/types/market";
 import { AESTHETICS } from "@/constants/aesthetics";
+import EcoCharacter from "@/components/eco-character";
 import { formatEther } from "ethers";
 
 // Styles object
@@ -501,6 +502,7 @@ const MarketplacePage: React.FC = () => {
   return (
     <div className="min-h-screen relative">
       <BackgroundElements />
+      <EcoCharacter />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-12">
         <MarketplaceHeader />

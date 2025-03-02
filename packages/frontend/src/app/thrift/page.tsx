@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useThriftToken } from "@/blockchain/hooks/useThriftToken";
 import Navbar from "@/components/navbar";
 import { Address } from "viem";
+import EcoCharacter from "@/components/eco-character";
 import { parseTokenAmount, formatTokenAmount } from "@/utils/token-utils";
 import {
   Coins,
@@ -161,6 +162,7 @@ export default function ThriftTokenPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FEFCF6] to-[#F4EFE6]">
+      <EcoCharacter />
       {/* Navigation Bar */}
       <Navbar />
 
