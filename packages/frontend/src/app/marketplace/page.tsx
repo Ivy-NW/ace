@@ -565,6 +565,13 @@ const MarketplacePage: React.FC = () => {
             >
               <Repeat size={20} />
             </button>
+            <Link href="/marketplace/escrow">
+              <button
+                className={`${styles.button} ${styles.primaryButton} flex items-center gap-2`}
+              >
+                View Escrows <ArrowRight size={16} />
+              </button>
+            </Link>
             <Link href="/marketplace/create">
               <button
                 className={`${styles.button} ${styles.primaryButton} flex items-center gap-2`}
