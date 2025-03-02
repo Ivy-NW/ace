@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { formatEther } from "viem";
@@ -30,12 +30,46 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
     useMarketplace();
   const [loading, setLoading] = useState<"eth" | "tokens" | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  
+  // Debug logs
+  useEffect(() => {
+    console.log("CartDrawer isOpen prop:", isOpen);
+    console.log("Cart state:", state);
+  }, [isOpen, state]);
+
+  // Handle client-side mounting
+  useEffect(() => {
+    setMounted(true);
+    
+    // Add event listener to close cart on ESC key
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isOpen, onClose]);
+
+  // Reset error when drawer opens/closes
+  useEffect(() => {
+    if (isOpen) {
+      setError(null);
+    }
+  }, [isOpen]);
 
   const handleBulkPurchaseWithEth = async () => {
     setError(null);
     try {
       setLoading("eth");
-      // Extract product IDs directly from cart items (which are flattened Products + quantity)
+      
+      if (!state || !state.items || state.items.length === 0) {
+        throw new Error("Cart is empty");
+      }
+      
+      // Extract product IDs directly from cart items
       const productIds = state.items.map((item) => item.id);
       const quantities = state.items.map((item) => item.quantity);
       const totalEthAmount = state.total.eth;
@@ -58,7 +92,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
     setError(null);
     try {
       setLoading("tokens");
-      // Extract product IDs directly from cart items (which are flattened Products + quantity)
+      
+      if (!state || !state.items || state.items.length === 0) {
+        throw new Error("Cart is empty");
+      }
+      
+      // Extract product IDs directly from cart items
       const productIds = state.items.map((item) => item.id);
       const quantities = state.items.map((item) => item.quantity);
 
@@ -129,7 +168,42 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
     },
   };
 
-  if (!isOpen) return null;
+  // Don't render content until client-side mounted
+  if (!mounted) {
+    return (
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black z-50"
+              onClick={onClose}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={overlayVariants}
+            />
+            <motion.div
+              className="fixed inset-y-0 right-0 w-full max-w-2xl z-50"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={drawerVariants}
+            >
+              <div className="h-full flex flex-col bg-gradient-to-b from-[#2A1B54] to-[#1A0B3B] text-white shadow-xl relative overflow-hidden">
+                <div className="flex items-center justify-center h-full">
+                  <RefreshCw className="w-8 h-8 animate-spin text-white/50" />
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    );
+  }
+
+  // Check if cart items exist
+  const hasItems = state && state.items && state.items.length > 0;
+  const cartItemCount = hasItems ? state.items.length : 0;
 
   return (
     <AnimatePresence>
@@ -161,7 +235,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-medium flex items-center gap-3 bg-gradient-to-r from-[#00FFD1] via-purple-300 to-pink-400 bg-clip-text text-transparent">
                     <ShoppingBag className="w-6 h-6 text-[#00FFD1]" />
-                    Shopping Cart ({state.items.length})
+                    Shopping Cart ({cartItemCount})
                   </h2>
                   <motion.button
                     onClick={onClose}
@@ -186,7 +260,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                   </motion.div>
                 )}
 
-                {state.items.length === 0 ? (
+                {!hasItems ? (
                   <motion.div
                     className="text-center py-12 backdrop-blur-md bg-purple-900/20 border border-purple-500/10 rounded-xl"
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -215,7 +289,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                     <AnimatePresence>
                       {state.items.map((item, index) => (
                         <motion.div
-                          key={item.id.toString()}
+                          key={`cart-item-${item.id.toString()}`}
                           custom={index}
                           variants={itemVariants}
                           initial="hidden"
@@ -229,22 +303,25 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                           <div className="relative backdrop-blur-md bg-purple-900/20 border border-purple-500/10 rounded-xl p-4 overflow-hidden z-10">
                             <div className="flex gap-4">
                               <div className="relative h-24 w-24 flex-shrink-0 rounded-lg overflow-hidden">
-                                <Image
-                                  src={item.image}
-                                  alt={item.name}
-                                  fill
-                                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
+                                {item.image && (
+                                  <Image
+                                    src={item.image}
+                                    alt={item.name || "Product"}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                  />
+                                )}
                               </div>
 
                               <div className="flex-1 min-w-0">
                                 <div className="flex justify-between items-start">
                                   <div className="space-y-1 min-w-0">
                                     <h3 className="font-medium text-lg truncate pr-4 text-white">
-                                      {item.name}
+                                      {item.name || "Unnamed Product"}
                                     </h3>
                                     <p className="text-white/60">
-                                      {item.brand}
+                                      {item.brand || "No Brand"}
                                     </p>
                                   </div>
                                   <motion.button
@@ -333,7 +410,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
               </div>
 
               {/* Footer */}
-              {state.items.length > 0 && (
+              {hasItems && (
                 <div className="border-t border-purple-500/20 p-6 space-y-6 backdrop-blur-sm relative z-10">
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">

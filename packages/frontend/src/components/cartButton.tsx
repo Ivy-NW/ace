@@ -1,21 +1,39 @@
-// CartButton.tsx
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/cartContext";
 import { CartDrawer } from "@/components/cartDrawer";
 
 export const CartButton: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  // Use a ref to track the actual state since state updates might be batched
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { state } = useCart();
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    console.log("CartButton mounted, initial drawerOpen:", drawerOpen);
+  }, [drawerOpen]);
 
-  const toggleCart = () => setIsOpen(!isOpen);
+  // Log when the drawer state changes
+  useEffect(() => {
+    console.log("CartButton drawerOpen state changed to:", drawerOpen);
+  }, [drawerOpen]);
+
+  const toggleCart = useCallback(() => {
+    console.log("Toggle cart clicked, current state:", drawerOpen);
+    setDrawerOpen(prevState => {
+      const newState = !prevState;
+      console.log("Setting drawer state to:", newState);
+      return newState;
+    });
+  }, [drawerOpen]);
+  
+  const closeCart = useCallback(() => {
+    console.log("Explicitly closing cart");
+    setDrawerOpen(false);
+  }, []);
 
   // Render a loading state on the server and during initial client render
   if (!mounted) {
@@ -29,7 +47,10 @@ export const CartButton: React.FC = () => {
     );
   }
 
+  // Safely calculate item count
   const itemCount = state?.items?.length || 0;
+
+  console.log("CartButton rendering with drawerOpen:", drawerOpen);
 
   return (
     <>
@@ -37,6 +58,7 @@ export const CartButton: React.FC = () => {
         onClick={toggleCart}
         className="relative p-3 hover:bg-[rgba(123,66,255,0.15)] rounded-full transition-colors duration-300"
         aria-label="Shopping cart"
+        data-testid="cart-button"
       >
         <ShoppingCart className="h-6 w-6 text-white" />
         {itemCount > 0 && (
@@ -50,7 +72,11 @@ export const CartButton: React.FC = () => {
           </span>
         )}
       </button>
-      <CartDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {/* Force the drawer to be visible for debugging */}
+      <CartDrawer 
+        isOpen={drawerOpen} 
+        onClose={closeCart} 
+      />
     </>
   );
 };

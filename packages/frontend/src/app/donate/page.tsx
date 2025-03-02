@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   useDonationAndRecycling,
@@ -13,7 +11,6 @@ import Navbar from "@/components/navbar";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
 import {
-  AlertCircle,
   Search,
   Filter,
   Recycle,
@@ -26,48 +23,8 @@ import {
   Edit,
   Settings,
   ChevronRight,
-  Home,
-  ShoppingBag,
-  Heart,
-  Menu,
-  X,
-  LogOut,
-  Moon,
-  Sun,
 } from "lucide-react";
 
-// Color System (same as marketplace)
-const COLORS = {
-  primary: {
-    main: "#7B42FF",
-    light: "#8A2BE2",
-    dark: "#4A00E0",
-  },
-  secondary: {
-    main: "#00FFD1",
-    light: "#00FFFF",
-    dark: "#00E6BD",
-  },
-  accent: {
-    pink: "#FF00FF",
-    red: "#FF1B6B",
-  },
-  background: {
-    dark: "#1A0B3B",
-    light: "#2A1B54",
-  },
-  text: {
-    primary: "#FFFFFF",
-    secondary: "rgba(255, 255, 255, 0.7)",
-    muted: "rgba(255, 255, 255, 0.5)",
-    pink: "#FF00FF",
-    red: "#FF1B6B",
-  },
-  glass: {
-    background: "rgba(42, 27, 84, 0.2)",
-    border: "rgba(123, 66, 255, 0.1)",
-  },
-};
 
 // Styles object (same as marketplace)
 const styles = {
@@ -156,13 +113,7 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// Error Display Component
-const ErrorDisplay = ({ message }: { message: string }) => (
-  <div className="backdrop-blur-md bg-red-500/10 border border-red-500/20 rounded-lg p-4 flex items-center gap-3">
-    <AlertCircle className="w-6 h-6 text-red-500" />
-    <p className="text-red-400">{message}</p>
-  </div>
-);
+
 
 // Empty State Component
 const EmptyState = () => (
@@ -183,7 +134,7 @@ const DonationCenterCard = ({
 }: { 
   center: DonationCenter, 
   isOwnedByUser: boolean,
-  router: any
+  router: ReturnType<typeof useRouter>
 }) => {
   return (
     <motion.div 

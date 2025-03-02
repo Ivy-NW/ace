@@ -23,38 +23,7 @@ import {
   PlusCircle
 } from "lucide-react";
 
-// Color System - Using the cyberpunk theme from marketplace
-const COLORS = {
-  primary: {
-    main: "#7B42FF",
-    light: "#8A2BE2",
-    dark: "#4A00E0",
-  },
-  secondary: {
-    main: "#00FFD1",
-    light: "#00FFFF",
-    dark: "#00E6BD",
-  },
-  accent: {
-    pink: "#FF00FF",
-    red: "#FF1B6B",
-  },
-  background: {
-    dark: "#1A0B3B",
-    light: "#2A1B54",
-  },
-  text: {
-    primary: "#FFFFFF",
-    secondary: "rgba(255, 255, 255, 0.7)",
-    muted: "rgba(255, 255, 255, 0.5)",
-    pink: "#FF00FF",
-    red: "#FF1B6B",
-  },
-  glass: {
-    background: "rgba(42, 27, 84, 0.2)",
-    border: "rgba(123, 66, 255, 0.1)",
-  },
-};
+
 
 // Styles object
 const styles = {
@@ -529,7 +498,7 @@ const AddDonationCenterPage: React.FC = () => {
               Creating a donation center will deploy a smart contract to the blockchain. This action cannot be undone.
             </p>
             <p>
-              As the creator, you will be responsible for managing donations and maintaining the center's information.
+              As the creator, you will be responsible for managing donations and maintaining the center&apos;s information.
             </p>
             <p>
               Gas fees will apply for this transaction. Ensure you have sufficient funds in your wallet.

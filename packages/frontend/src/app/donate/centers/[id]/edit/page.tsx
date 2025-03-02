@@ -5,50 +5,15 @@ import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import { motion } from "framer-motion";
 import {
-  Loader2, Check, X, ArrowLeft, Settings, 
-  Recycle, Gift, Package, Search, Filter, Heart, 
-  ArrowRight, Clock, Repeat, AlertCircle, ToggleRight
-} from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import { formatEther } from "ethers";
+  Loader2, Check, ArrowLeft, Settings, 
+  Recycle, Gift, AlertCircle, ToggleRight
+} from "lucide-react";;
 import {
   useGetDonationCenter,
   useDonationCenterManagement,
 } from "@/blockchain/hooks/useDonationCenter";
 
-// Color System
-const COLORS = {
-  primary: {
-    main: "#7B42FF",
-    light: "#8A2BE2",
-    dark: "#4A00E0",
-  },
-  secondary: {
-    main: "#00FFD1",
-    light: "#00FFFF",
-    dark: "#00E6BD",
-  },
-  accent: {
-    pink: "#FF00FF",
-    red: "#FF1B6B",
-  },
-  background: {
-    dark: "#1A0B3B",
-    light: "#2A1B54",
-  },
-  text: {
-    primary: "#FFFFFF",
-    secondary: "rgba(255, 255, 255, 0.7)",
-    muted: "rgba(255, 255, 255, 0.5)",
-    pink: "#FF00FF",
-    red: "#FF1B6B",
-  },
-  glass: {
-    background: "rgba(42, 27, 84, 0.2)",
-    border: "rgba(123, 66, 255, 0.1)",
-  },
-};
+
 
 // Styles object
 const styles = {
@@ -150,7 +115,7 @@ const FormToggleOption = ({
 }: {
   id: string;
   label: string;
-  icon: any;
+  icon: React.ElementType;
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
@@ -302,7 +267,7 @@ const EditCenterPage = ({ params }: { params: Promise<{ id: string }> }) => {
             Edit Donation Center
           </h1>
           <p className="text-white/70">
-            Manage your donation center's settings and capabilities
+            Manage your donation center&apos;s settings and capabilities
           </p>
         </motion.div>
 
