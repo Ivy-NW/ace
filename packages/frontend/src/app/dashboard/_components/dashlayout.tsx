@@ -6,41 +6,41 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { Home, Wallet, Shirt, Heart, Settings } from "lucide-react";
 
-// Enhanced Color System
+// Enhanced Color System with Darker Tones
 const COLORS = {
   primary: {
-    main: "#7B42FF",
-    light: "#8A2BE2",
-    dark: "#4A00E0",
-    gradient: "rgba(123, 66, 255, 0.15)",
+    main: "#5B32BF", // Darker purple
+    light: "#6A1BB2", // Darker violet
+    dark: "#3A00B0", // Deeper dark purple
+    gradient: "rgba(91, 50, 191, 0.15)",
   },
   secondary: {
-    main: "#00FFD1",
-    light: "#00FFFF",
-    dark: "#00E6BD",
-    gradient: "rgba(0, 255, 209, 0.15)",
+    main: "#00D1B1", // Darker teal
+    light: "#00CCCC", // Darker cyan
+    dark: "#00B69D", // Deeper teal
+    gradient: "rgba(0, 209, 177, 0.15)",
   },
   accent: {
-    pink: "#FF00FF",
-    red: "#FF1B6B",
-    pinkGradient: "rgba(255, 0, 255, 0.15)",
-    redGradient: "rgba(255, 27, 107, 0.15)",
+    pink: "#CC00CC", // Darker magenta
+    red: "#CC154B", // Darker crimson
+    pinkGradient: "rgba(204, 0, 204, 0.15)",
+    redGradient: "rgba(204, 21, 75, 0.15)",
   },
   background: {
-    dark: "#1A0B3B",
-    light: "#2A1B54",
-    glass: "rgba(42, 27, 84, 0.25)",
+    dark: "#0F061F", // Much darker purple-black
+    light: "#1A0F34", // Darker purple background
+    glass: "rgba(26, 15, 52, 0.25)",
   },
   text: {
-    primary: "#FFFFFF",
-    secondary: "rgba(255, 255, 255, 0.7)",
-    muted: "rgba(255, 255, 255, 0.5)",
+    primary: "#E6E6E6", // Slightly dimmer white
+    secondary: "rgba(230, 230, 230, 0.7)",
+    muted: "rgba(230, 230, 230, 0.5)",
   },
   glass: {
-    background: "rgba(42, 27, 84, 0.2)",
-    border: "rgba(123, 66, 255, 0.1)",
-    highlight: "rgba(255, 255, 255, 0.05)",
-    shadow: "rgba(0, 0, 0, 0.1)",
+    background: "rgba(26, 15, 52, 0.2)",
+    border: "rgba(91, 50, 191, 0.1)",
+    highlight: "rgba(230, 230, 230, 0.05)",
+    shadow: "rgba(0, 0, 0, 0.3)", // Darker shadow
   },
 };
 
@@ -98,14 +98,14 @@ const GlobalStyles = `
   }
 
   .glass-card:hover {
-    background: rgba(42, 27, 84, 0.3);
+    background: rgba(26, 15, 52, 0.3);
     transform: translateY(-5px);
     box-shadow: 0 12px 40px ${COLORS.primary.main}26;
   }
 
   @keyframes pulse {
     0%, 100% { opacity: var(--tw-opacity); }
-    50% { opacity: calc(var(--tw-opacity) * 0.6); }
+    50% { opacity: calc(var(--tw-opacity) * 0.5); }
   }
 
   @keyframes gradient {
@@ -116,11 +116,11 @@ const GlobalStyles = `
 
   .animate-gradient {
     background-size: 200% auto;
-    animation: gradient 8s ease infinite;
+    animation: gradient 10s ease infinite;
   }
 
   .animate-pulse {
-    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 `;
 
@@ -130,11 +130,11 @@ const BackgroundElements = () => {
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
       <div className={`absolute inset-0 ${styles.backgroundGradient}`} />
 
-      {/* Ambient Glows */}
-      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#FF00FF] rounded-full filter blur-[120px] opacity-[0.15] animate-pulse" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#7B42FF] rounded-full filter blur-[150px] opacity-[0.12] animate-pulse" />
-      <div className="absolute top-1/3 left-1/4 w-[250px] h-[250px] bg-[#00FFFF] rounded-full filter blur-[100px] opacity-[0.1] animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-[#FF1B6B] rounded-full filter blur-[130px] opacity-[0.08] animate-pulse" />
+      {/* Ambient Glows - Darker and More Subtle */}
+      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#CC00CC] rounded-full filter blur-[150px] opacity-[0.10] animate-pulse" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#5B32BF] rounded-full filter blur-[180px] opacity-[0.08] animate-pulse" />
+      <div className="absolute top-1/3 left-1/4 w-[250px] h-[250px] bg-[#00CCCC] rounded-full filter blur-[130px] opacity-[0.07] animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-[#CC154B] rounded-full filter blur-[160px] opacity-[0.06] animate-pulse" />
     </div>
   );
 };
@@ -170,7 +170,7 @@ const GlassCard: React.FC<{
         background: `linear-gradient(135deg, ${COLORS.glass.background} 0%, ${COLORS.glass.highlight} 50%, ${COLORS.glass.background} 100%)`,
         borderTop: `1px solid ${COLORS.glass.highlight}`,
         borderLeft: `1px solid ${COLORS.glass.highlight}`,
-        boxShadow: `0 4px 6px -1px ${COLORS.glass.shadow}, 0 2px 4px -1px ${COLORS.glass.shadow}`,
+        boxShadow: `0 6px 8px -1px ${COLORS.glass.shadow}, 0 4px 6px -1px ${COLORS.glass.shadow}`,
       }}
     >
       <div className="relative z-10">{children}</div>
@@ -209,7 +209,7 @@ function SideNav() {
                   }}
                   initial={{ x: -100 }}
                   whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.4 }}
                 />
               </div>
             </motion.div>
@@ -254,7 +254,7 @@ export default function DashboardLayout({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.4 }}
                 >
                   <GlassCard className="p-6">
                     {/* Main Content */}
