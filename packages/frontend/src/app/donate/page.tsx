@@ -8,6 +8,7 @@ import {
   type DonationCenter,
 } from "@/blockchain/hooks/useDonationCenter";
 import Navbar from "@/components/navbar";
+import EcoCharacter from "@/components/eco-character";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
 import {
@@ -386,6 +387,7 @@ const DonationCentersPage: React.FC = () => {
     return (
       <div className="min-h-screen relative">
         <BackgroundElements />
+        <EcoCharacter />
 
         <Navbar />
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-12">
@@ -399,6 +401,7 @@ const DonationCentersPage: React.FC = () => {
   return (
     <div className="min-h-screen relative">
       <BackgroundElements />
+      <EcoCharacter />
 
       <Navbar />
       
