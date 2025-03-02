@@ -8,6 +8,7 @@ import {
   type DonationCenter,
 } from "@/blockchain/hooks/useDonationCenter";
 import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 import EcoCharacter from "@/components/eco-character";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
@@ -641,27 +642,7 @@ const DonationCentersPage: React.FC = () => {
             </div>
           </div>
         )}
-        
-        {/* Footer */}
-        <div className="mt-16 pt-8 border-t border-purple-500/10 text-center">
-          <p className="text-white/50 text-sm">
-            Thrift Protocol — Sustainable Fashion on the Blockchain
-          </p>
-          <div className="flex justify-center mt-4 space-x-4">
-            <a href="#" className="text-white/70 hover:text-[#00FFD1] transition-colors">
-              About
-            </a>
-            <a href="#" className="text-white/70 hover:text-[#00FFD1] transition-colors">
-              Terms
-            </a>
-            <a href="#" className="text-white/70 hover:text-[#00FFD1] transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="text-white/70 hover:text-[#00FFD1] transition-colors">
-              Contact
-            </a>
-          </div>
-        </div>
+        <Footer />
       </div>
     </div>
   );
